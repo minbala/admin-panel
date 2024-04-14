@@ -1,0 +1,14 @@
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /docs/*any                --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (4 handlers)
+[GIN-debug] GET    /ping                     --> admin-panel/cmd/commands.(*ServeCommand).RunE.func1 (4 handlers)
+[GIN-debug] POST   /v1/login                 --> admin-panel/internal/user/port/public/http/api/v1.NormalFeatureAPI.UserLoginV1-fm (6 handlers)
+[GIN-debug] DELETE /v1/logout                --> admin-panel/internal/user/port/public/http/api/v1.NormalFeatureAPI.UserLogOutV1-fm (7 handlers)
+[GIN-debug] PUT    /v1/user                  --> admin-panel/internal/user/port/public/http/api/v1.UserManagementAPI.UpdateUser-fm (7 handlers)
+[GIN-debug] POST   /v1/user                  --> admin-panel/internal/user/port/public/http/api/v1.UserManagementAPI.CreateUserAccount-fm (7 handlers)
+[GIN-debug] GET    /v1/user                  --> admin-panel/internal/user/port/public/http/api/v1.UserManagementAPI.ListUsers-fm (7 handlers)
+[GIN-debug] GET    /v1/user-logs             --> admin-panel/internal/user/port/public/http/api/v1.UserManagementAPI.ListUserLogs-fm (7 handlers)
+[GIN-debug] GET    /v1/user/:id              --> admin-panel/internal/user/port/public/http/api/v1.UserManagementAPI.GetUserByID-fm (7 handlers)
+[GIN-debug] DELETE /v1/user/:id              --> admin-panel/internal/user/port/public/http/api/v1.UserManagementAPI.DeleteUserAccount-fm (7 handlers)

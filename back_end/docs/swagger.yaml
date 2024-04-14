@@ -1,0 +1,375 @@
+definitions:
+  app.ResponseMessage:
+    properties:
+      message:
+        type: string
+    type: object
+  schema.ListUserLogsResponse:
+    properties:
+      total:
+        type: integer
+      userLogs:
+        items:
+          $ref: '#/definitions/schema.UserLog'
+        type: array
+    type: object
+  schema.ListUserResponse:
+    properties:
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/schema.User'
+        type: array
+    type: object
+  schema.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  schema.LoginResponse:
+    properties:
+      accessToken:
+        type: string
+    type: object
+  schema.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      userRole:
+        type: string
+    type: object
+  schema.UserCreateRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      userRole:
+        type: string
+    type: object
+  schema.UserLog:
+    properties:
+      createdAt:
+        type: string
+      data:
+        type: string
+      errorMessage:
+        type: string
+      event:
+        type: string
+      id:
+        type: integer
+      requestUrl:
+        type: string
+      status:
+        type: string
+      userId:
+        type: integer
+    type: object
+  schema.UserUpdateRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      userId:
+        type: integer
+      userRole:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: support@devxmm.com
+    name: API Support
+    url: http://www.minbala.com/support
+  description: AdminPanel API in Go using Gin framework
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: AdminPanel  API
+  version: "1.0"
+paths:
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: User Login Version 1
+      parameters:
+      - description: Request body in JSON format
+        in: body
+        name: requestData
+        required: true
+        schema:
+          $ref: '#/definitions/schema.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/schema.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      summary: User Login
+      tags:
+      - NormalFeatureAPI
+  /v1/logout:
+    delete:
+      consumes:
+      - application/json
+      description: User logout Version 1
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: User logout
+      tags:
+      - NormalFeatureAPI
+  /v1/user:
+    get:
+      consumes:
+      - application/json
+      description: List Users Information
+      parameters:
+      - description: bala
+        in: query
+        name: name
+        type: string
+      - description: user
+        in: query
+        name: userRole
+        type: string
+      - description: "20"
+        in: query
+        name: limit
+        type: integer
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.ListUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: List User Information
+      tags:
+      - UserManagementAPI
+    post:
+      consumes:
+      - application/json
+      description: create employee account, assign user to a role but u can't  assign
+        to owner role
+      parameters:
+      - description: Request body in JSON format
+        in: body
+        name: requestData
+        required: true
+        schema:
+          $ref: '#/definitions/schema.UserCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: create employee account
+      tags:
+      - UserManagementAPI
+    put:
+      consumes:
+      - application/json
+      description: User update user
+      parameters:
+      - description: Request body in JSON format
+        in: body
+        name: requestData
+        required: true
+        schema:
+          $ref: '#/definitions/schema.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: User update  user
+      tags:
+      - UserManagementAPI
+  /v1/user-logs:
+    get:
+      consumes:
+      - application/json
+      description: List Users Information
+      parameters:
+      - description: "2"
+        in: query
+        name: userID
+        type: integer
+      - description: "20"
+        in: query
+        name: limit
+        type: integer
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.ListUserLogsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: List User Information
+      tags:
+      - UserManagementAPI
+  /v1/user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete  user account
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: delete  user account
+      tags:
+      - UserManagementAPI
+    get:
+      consumes:
+      - application/json
+      description: delete  user account
+      parameters:
+      - description: 'user id '
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.ResponseMessage'
+      security:
+      - Bearer: []
+      summary: delete  user account
+      tags:
+      - UserManagementAPI
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
